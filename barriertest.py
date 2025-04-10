@@ -11,12 +11,30 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 from reportlab.lib.units import inch
 from io import BytesIO
+from PIL import Image
 
 st.set_page_config(
     page_title="Web Accessibility Analyzer",
     page_icon="♿",
     layout="wide"
 )
+
+def display_header():
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        # Display the logo (replace 'logo.png' with your actual logo file)
+        try:
+            # You can use a local image file
+            logo = Image.open('logo.png')
+            st.image(logo, width=400)  # Adjust width as needed
+        except FileNotFoundError:
+            # If logo file not found, you can use a placeholder or emoji
+            st.markdown("<div style='text-align: center; font-size: 70px;'>♿</div>", unsafe_allow_html=True)
+        
+        # Display the title with custom styling
+        st.markdown("<h1 style='text-align: center;'>Web Accessibility Analyzer</h1>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center;'>Identify and fix accessibility issues to make the web barrier-free for everyone</p>", unsafe_allow_html=True)
+
 
 def is_valid_url(url):
     """Check if the URL is valid."""
@@ -693,7 +711,11 @@ def get_download_link(pdf_bytes, filename="accessibility_report.pdf"):
     return href
 
 def main():
-    st.title("Web Accessibility Analyzer")
+    display_header()
+    
+    # Add a horizontal line for visual separation
+    st.markdown("---")
+
     st.markdown(
         """
         This tool analyzes websites for barrier-free access (accessibility). Enter a URL to scan for common 
